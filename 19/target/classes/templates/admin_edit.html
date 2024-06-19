@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Statement</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input, select, button {
+            padding: 10px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Edit Statement</h1>
+    <form th:action="@{/admin/edit}" th:object="${stat}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" th:field="*{name}"/>
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <select id="status" th:field="*{statmentStatus}">
+                <option th:each="status : ${statuses}" th:value="${status}" th:text="${status}"></option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

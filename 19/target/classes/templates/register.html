@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #5b9ed6;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2382e8;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Регистрация пользователя</h2>
+    <form th:action="@{/register}" method="post" onsubmit="return validateForm()">
+        <label for="username">Имя пользователя:</label>
+        <input type="text" id="username" name="username" required minlength="3">
+        <span id="usernameError" class="error"></span><br><br>
+
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required minlength="6">
+        <span id="passwordError" class="error"></span><br><br>
+
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" minlength="3">
+        <span id="nameError" class="error"></span><br><br>
+
+        <label for="surname">Фамилия:</label>
+        <input type="text" id="surname" name="surname" minlength="3">
+        <span id="surnameError" class="error"></span><br><br>
+
+        <label for="patronymic">Отчество:</label>
+        <input type="text" id="patronymic" name="patronymic" minlength="3">
+        <span id="patronymicError" class="error"></span><br><br>
+
+        <label for="numberPhone">Номер телефона (в формате 79183333333):</label>
+        <input type="text" id="numberPhone" name="numberPhone" required pattern="[0-9]{11}">
+        <span id="phoneError" class="error"></span><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <span id="emailError" class="error"></span><br><br>
+
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+
+<script>
+    function validateForm() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        var name = document.getElementById("name").value;
+        var surname = document.getElementById("surname").value;
+        var patronymic = document.getElementById("patronymic").value;
+        var phone = document.getElementById("numberPhone").value;
+        var email = document.getElementById("email").value;
+
+        var isValid = true;
+
+        // Проверка на пустоту и минимальную длину каждого поля
+        if (!username || username.length < 3) {
+            document.getElementById("usernameError").innerHTML = "Логин должен содержать минимум 3 символа";
+            isValid = false;
+        } else {
+            document.getElementById("usernameError").innerHTML = "";
+        }
+
+        if (!password || password.length < 6) {
+            document.getElementById("passwordError").innerHTML = "Пароль должен содержать минимум 6 символов";
+            isValid = false;
+        } else {
+            document.getElementById("passwordError").innerHTML = "";
+        }
+
+        if (name.length > 0 && name.length < 3) {
+            document.getElementById("nameError").innerHTML = "Имя должно содержать минимум 3 символа";
+            isValid = false;
+        } else {
+            document.getElementById("nameError").innerHTML = "";
+        }
+
+        if (surname.length > 0 && surname.length < 3) {
+            document.getElementById("surnameError").innerHTML = "Фамилия должна содержать минимум 3 символа";
+            isValid = false;
+        } else {
+            document.getElementById("surnameError").innerHTML = "";
+        }
+
+        if (patronymic.length > 0 && patronymic.length < 3) {
+            document.getElementById("patronymicError").innerHTML = "Отчество должно содержать минимум 3 символа";
+            isValid = false;
+        } else {
+            document.getElementById("patronymicError").innerHTML = "";
+        }
+
+        // Проверка формата номера телефона
+        var phonePattern = /^[0-9]{11}$/;
+        if (!phonePattern.test(phone)) {
+            document.getElementById("phoneError").innerHTML = "Номер телефона должен быть в формате 79183333333";
+            isValid = false;
+        } else {
+            document.getElementById("phoneError").innerHTML = "";
+        }
+
+        // Проверка формата email
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById("emailError").innerHTML = "Введите корректный email адрес";
+            isValid = false;
+        } else {
+            document.getElementById("emailError").innerHTML = "";
+        }
+
+        return isValid;
+    }
+</script>
+</body>
+</html>

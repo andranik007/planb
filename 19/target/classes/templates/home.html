@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .username {
+            margin-bottom: 20px;
+            font-size: 1.2em;
+            color: #555;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .actions a {
+            display: inline-block;
+            margin-right: 10px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .actions a:hover {
+            background-color: #0056b3;
+        }
+        .logout {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .logout a {
+            color: #ff4b5c;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="logout">
+        <a th:href="@{/logout}">Выйти</a>
+    </div>
+    <h1>Профиль</h1>
+    <div class="username">
+        Вы вошли под аккаунтом: <span th:text="${username}">Имя пользователя</span>
+    </div>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя</th>
+<!--            <th>Логин пользователя</th>-->
+            <th>Статус</th>
+<!--            <th>Действия</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stat : ${stats}">
+            <td th:text="${stat.name}">Название</td>
+<!--            <td th:text="${stat.user.username}">Имя пользователя</td>-->
+            <td th:text="${stat.statmentStatus}">Статус</td>
+<!--            <td>
+                <a th:href="@{/edit/{id}(id=${stat.id})}">Редактировать</a>
+            </td>-->
+        </tr>
+        </tbody>
+    </table>
+    <div class="actions">
+        <a th:href="@{/add}">Добавить</a>
+        <div class="admin-panel" sec:authorize="hasAuthority('ADMIN')">
+            <a th:href="@{/admin}">Панель администратора</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

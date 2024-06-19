@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Панель администратора</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .logout-btn {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Панель администратора</h1>
+    <!-- Кнопка Logout -->
+    <a class="logout-btn" th:href="@{/logout}">Выйти</a>
+
+    <h2>Все пользователи</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Имя пользователя</th>
+            <th>Email</th>
+            <th>Роли</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.roles}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2>Все заявления</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Название</th>
+            <th>Пользователь</th>
+            <th>Статус</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="stat : ${stats}">
+            <td th:text="${stat.id}"></td>
+            <td th:text="${stat.name}"></td>
+            <td th:text="${stat.user.username}"></td>
+            <td th:text="${stat.statmentStatus}"></td>
+            <td>
+                <a th:href="@{/admin/edit/{id}(id=${stat.id})}">Редактировать</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Кнопка для возврата на пользовательскую панель -->
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/">Вернуться на страницу пользователя</a>
+    </div>
+</div>
+</body>
+</html>
